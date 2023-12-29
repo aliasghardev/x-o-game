@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: rgb(37,0,62);
+background: linear-gradient(45deg, rgba(37,0,62,1) 0%, rgba(104,0,178,1) 26%, rgba(27,0,103,1) 50%, rgba(111,2,191,1) 83%, rgba(53,0,92,1) 100%);
+            display: flex;
+            justify-content: center;align-items: center;
+            height: 100vh;
+            flex-wrap: wrap;
+        }
+
+        h1{
+            text-transform: capitalize;
+            font-size: 5em;
+            width: 100%;
+            color: aliceblue;
+            display: flex;
+            justify-content: center;
+        }
+        .box {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+
+            >div {
+                width: 33.333%;
+                height: 33.333%;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+                font-size: 40px;
+                color: aquamarine;
+                &:nth-of-type(2){
+                    border: 3px solid white;
+                    border-top: none;
+                }
+                &:nth-of-type(4){
+                    border: 3px solid white;
+                    border-left: none;
+                }
+                &:nth-of-type(5){
+                    border: 3px solid white;
+                }
+                &:nth-of-type(6){
+                    border: 3px solid white;
+                    border-right: none;
+                }
+                &:nth-of-type(8){
+                    border: 3px solid white;
+                    border-bottom: none;
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>x-o game</h1>
+    <div class="box">
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+        <div data-status="off"></div>
+    </div>
+</body>
+<script>
+    let z = 0
+
+    let i = 1
+    let _div = document.querySelectorAll('.box>div')
+    _div.forEach((val) => {
+        val.addEventListener('click', () => {
+            if (
+                (val.getAttribute('data-status')) == 'off'
+            ) {
+                if (i % 2) {
+                    val.innerHTML = 'X'
+                } else {
+                    val.innerHTML = 'O'
+                }
+                z++
+                i++
+                val.setAttribute('data-status', 'on')
+            }
+            _check()
+        })
+    })
+
+    let winner = ''
+    const mp = []
+    function _check() {
+        _div.forEach((val, i) => {
+            mp[i] = val.innerHTML
+        })
+        console.log(mp);
+        switch (true) {
+            case mp[0] == mp[1] && mp[1] == mp[2] && mp[0] != '': winner = mp[0]; break;
+            case mp[0] == mp[3] && mp[0] == mp[6] && mp[0] != '': winner = mp[0]; break;
+            case mp[4] == mp[1] && mp[1] == mp[7] && mp[1] != '': winner = mp[1]; break;
+            case mp[5] == mp[8] && mp[8] == mp[2] && mp[8] != '': winner = mp[8]; break;
+            case mp[6] == mp[7] && mp[6] == mp[8] && mp[6] != '': winner = mp[6]; break;
+            case mp[3] == mp[4] && mp[3] == mp[5] && mp[3] != '': winner = mp[3]; break;
+            case mp[0] == mp[4] && mp[0] == mp[8] && mp[8] != '': winner = mp[8]; break;
+            case mp[2] == mp[4] && mp[2] == mp[6] && mp[6] != '': winner = mp[6]; break;
+        }
+        if (winner != '') {
+            alert(winner + ' is winner! ')
+            setTimeout(() => {
+                location.reload()
+            }, 500);
+        }
+
+        if(z == 9 && winner ==''){
+            alert('mosavi')
+            setTimeout(() => {
+                location.reload()
+            }, 500);
+        }
+
+    }
+</script>
+
+</html>
